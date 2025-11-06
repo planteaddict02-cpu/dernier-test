@@ -2540,16 +2540,30 @@
 
         // Event Listeners
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('fromAmount').addEventListener('input', updateFromAmount);
-            document.getElementById('jercatBuyAmount').addEventListener('input', updateJercatAmount);
-            document.getElementById('customSlippage').addEventListener('input', (e) => {
-                state.slippage = parseFloat(e.target.value) || 0.5;
-                updateFromAmount();
-            });
+            const fromAmountInput = document.getElementById('fromAmount');
+            const jercatBuyInput = document.getElementById('jercatBuyAmount');
+            const customSlippageInput = document.getElementById('customSlippage');
+            
+            if (fromAmountInput) {
+                fromAmountInput.addEventListener('input', updateFromAmount);
+            }
+            if (jercatBuyInput) {
+                jercatBuyInput.addEventListener('input', updateJercatAmount);
+            }
+            if (customSlippageInput) {
+                customSlippageInput.addEventListener('input', (e) => {
+                    state.slippage = parseFloat(e.target.value) || 0.5;
+                    updateFromAmount();
+                });
+            }
         });
 
         // Initialize on load
-        window.addEventListener('load', init);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 </body>
 </html><!DOCTYPE html>
